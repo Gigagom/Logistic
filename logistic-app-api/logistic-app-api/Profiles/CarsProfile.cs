@@ -12,7 +12,12 @@ namespace logistic_app_api.Profiles
     {
         public CarsProfile()
         {
-            CreateMap<Car, CarUpdateDto>();
+            //get/post car
+            CreateMap<Car, CarReadDto>();
+            CreateMap<CarCreateDto, Car>();
+            //get cars
+            CreateMap<Car, CarsReadDto>();
+            //update car
             CreateMap<CarUpdateDto, Car>();
         }
     }

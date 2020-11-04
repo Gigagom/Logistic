@@ -23,33 +23,35 @@ namespace logistic_app_api.Controllers
         }
         //GET api/cars
         [HttpGet]
-        public ActionResult<IEnumerable<Car>> GetAllCars()
+        public ActionResult<IEnumerable<CarReadDto>> GetAllCars()
         {
             var cars = _cars.GetAll();
-            return Ok(cars);
+            return Ok(_mapper.Map<IEnumerable<CarsReadDto>>(cars));
         }
 
         //GET api/cars/{id}
         [HttpGet("{id}")]
-        public ActionResult<Car> GetCarById(int id)
+        public ActionResult<CarReadDto> GetCarById(int id)
         {
             var car = _cars.GetById(id);
             if (car != null)
             {
-                return Ok(car);
+                return Ok(_mapper.Map<CarReadDto>(car));
             }
             return NotFound();
         }
 
         //POST api/cars
         [HttpPost]
-        public ActionResult<Car> CreateCar(Car _car)
+        public ActionResult<CarReadDto> CreateCar(CarCreateDto _car)
         {
-            var car = _car;
+            var car = _mapper.Map<Car>(_car);
             _cars.Create(car);
             _cars.SaveChanges();
 
-            return Ok(car);
+            var response = _mapper.Map<CarReadDto>(car);
+
+            return Ok(response);
         }
 
         //PUT api/cars/{id}
