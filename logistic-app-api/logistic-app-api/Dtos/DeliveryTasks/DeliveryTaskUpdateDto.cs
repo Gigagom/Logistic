@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace logistic_app_api.Dtos.DeliveryTasks
 {
-    public class UserUpdateDto
+    public class DeliveryTaskUpdateDto
     {
         public User Driver { get; set; }
         public Car Car { get; set; }

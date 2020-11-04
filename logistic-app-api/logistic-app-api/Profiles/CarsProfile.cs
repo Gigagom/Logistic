@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using logistic_app_api.Dtos;
+using logistic_app_api.Dtos.Cars;
 using logistic_app_api.Models;
 using System;
 using System.Collections.Generic;
