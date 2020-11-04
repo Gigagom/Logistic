@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using logistic_app_api.Data;
-using logistic_app_api.Dtos;
+using logistic_app_api.Dtos.Cars;
 using logistic_app_api.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,6 +21,7 @@ namespace logistic_app_api.Controllers
             _cars = (CarsRepository)repository;
             _mapper = mapper;
         }
+
         //GET api/cars
         [HttpGet]
         public ActionResult<IEnumerable<CarReadDto>> GetAllCars()
