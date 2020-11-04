@@ -14,19 +14,19 @@ namespace logistic_app_api.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        private readonly CarsRepository _cars;
+        private readonly CarsRepository _repository;
         private readonly IMapper _mapper;
         public CarsController(IRepository<Car> repository, IMapper mapper)
         {
-            _cars = (CarsRepository)repository;
+            _repository = (CarsRepository)repository;
             _mapper = mapper;
         }
 
         //GET api/cars
         [HttpGet]
-        public ActionResult<IEnumerable<CarReadDto>> GetAll()
+        public ActionResult<IEnumerable<CarsReadDto>> GetAll()
         {
-            var cars = _cars.GetAll();
+            var cars = _repository.GetAll();
             return Ok(_mapper.Map<IEnumerable<CarsReadDto>>(cars));
         }
 
@@ -34,7 +34,7 @@ namespace logistic_app_api.Controllers
         [HttpGet("{id}")]
         public ActionResult<CarReadDto> GetById(int id)
         {
-            var car = _cars.GetById(id);
+            var car = _repository.GetById(id);
             if (car != null)
             {
                 return Ok(_mapper.Map<CarReadDto>(car));
@@ -47,8 +47,8 @@ namespace logistic_app_api.Controllers
         public ActionResult<CarReadDto> Create(CarCreateDto _car)
         {
             var car = _mapper.Map<Car>(_car);
-            _cars.Create(car);
-            _cars.SaveChanges();
+            _repository.Create(car);
+            _repository.SaveChanges();
 
             var response = _mapper.Map<CarReadDto>(car);
 
@@ -59,14 +59,14 @@ namespace logistic_app_api.Controllers
         [HttpPut("{id}")]
         public ActionResult Update(int id, CarUpdateDto carUpdateDto)
         {
-            var carFromRepo = _cars.GetById(id);
+            var carFromRepo = _repository.GetById(id);
             if (carFromRepo == null)
             {
                 return NotFound();
             }
             _mapper.Map(carUpdateDto, carFromRepo);
-            _cars.Update(carFromRepo);
-            _cars.SaveChanges();
+            _repository.Update(carFromRepo);
+            _repository.SaveChanges();
 
             return NoContent();
         }
@@ -75,13 +75,13 @@ namespace logistic_app_api.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var carFromRepo = _cars.GetById(id);
+            var carFromRepo = _repository.GetById(id);
             if (carFromRepo == null)
             {
                 return NotFound();
             }
-            _cars.Delete(carFromRepo);
-            _cars.SaveChanges();
+            _repository.Delete(carFromRepo);
+            _repository.SaveChanges();
 
             return NoContent();
         }

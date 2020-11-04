@@ -14,11 +14,11 @@ namespace logistic_app_api.Controllers
     [ApiController]
     public class TrailersController : ControllerBase
     {
-        private readonly TrailersRepository _trailers;
+        private readonly TrailersRepository _repository;
         private readonly IMapper _mapper;
         public TrailersController(IRepository<Trailer> repository, IMapper mapper)
         {
-            _trailers = (TrailersRepository)repository;
+            _repository = (TrailersRepository)repository;
             _mapper = mapper;
         }
 
@@ -26,7 +26,7 @@ namespace logistic_app_api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<TrailersReadDto>> GetAll()
         {
-            var cars = _trailers.GetAll();
+            var cars = _repository.GetAll();
             return Ok(_mapper.Map<IEnumerable<TrailersReadDto>>(cars));
         }
 
@@ -34,7 +34,7 @@ namespace logistic_app_api.Controllers
         [HttpGet("{id}")]
         public ActionResult<TrailerReadDto> GetById(int id)
         {
-            var car = _trailers.GetById(id);
+            var car = _repository.GetById(id);
             if (car != null)
             {
                 return Ok(_mapper.Map<TrailerReadDto>(car));
@@ -47,8 +47,8 @@ namespace logistic_app_api.Controllers
         public ActionResult<TrailerReadDto> Create(TrailerCreateDto _trailer)
         {
             var trailer = _mapper.Map<Trailer>(_trailer);
-            _trailers.Create(trailer);
-            _trailers.SaveChanges();
+            _repository.Create(trailer);
+            _repository.SaveChanges();
 
             var response = _mapper.Map<TrailerReadDto>(trailer);
 
@@ -59,14 +59,14 @@ namespace logistic_app_api.Controllers
         [HttpPut("{id}")]
         public ActionResult Update(int id, TrailerUpdateDto trailerUpdateDto)
         {
-            var trailerFromRepo = _trailers.GetById(id);
+            var trailerFromRepo = _repository.GetById(id);
             if (trailerFromRepo == null)
             {
                 return NotFound();
             }
             _mapper.Map(trailerUpdateDto, trailerFromRepo);
-            _trailers.Update(trailerFromRepo);
-            _trailers.SaveChanges();
+            _repository.Update(trailerFromRepo);
+            _repository.SaveChanges();
 
             return NoContent();
         }
@@ -75,13 +75,13 @@ namespace logistic_app_api.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var trailerFromRepo = _trailers.GetById(id);
+            var trailerFromRepo = _repository.GetById(id);
             if (trailerFromRepo == null)
             {
                 return NotFound();
             }
-            _trailers.Delete(trailerFromRepo);
-            _trailers.SaveChanges();
+            _repository.Delete(trailerFromRepo);
+            _repository.SaveChanges();
 
             return NoContent();
         }

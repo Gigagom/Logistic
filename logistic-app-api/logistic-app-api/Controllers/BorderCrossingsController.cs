@@ -10,31 +10,31 @@ using System.Threading.Tasks;
 
 namespace logistic_app_api.Controllers
 {
-    [Route("api/bordercrossing")]
+    [Route("api/bordercrossings")]
     [ApiController]
     public class BorderCrossingsController : ControllerBase
     {
-        private readonly BorderCrossingsRepository _borderCrossings;
+        private readonly BorderCrossingsRepository _repository;
         private readonly IMapper _mapper;
         public BorderCrossingsController(IRepository<BorderCrossing> repository, IMapper mapper)
         {
-            _borderCrossings = (BorderCrossingsRepository)repository;
+            _repository = (BorderCrossingsRepository)repository;
             _mapper = mapper;
         }
 
-        //GET api/bordercrossing
+        //GET api/bordercrossings
         [HttpGet]
         public ActionResult<IEnumerable<BorderCrossingReadDto>> GetAll()
         {
-            var borderCrossings = _borderCrossings.GetAll();
+            var borderCrossings = _repository.GetAll();
             return Ok(_mapper.Map<IEnumerable<BorderCrossingReadDto>>(borderCrossings));
         }
 
-        //GET api/bordercrossing/{id}
+        //GET api/bordercrossings/{id}
         [HttpGet("{id}")]
         public ActionResult<BorderCrossingReadDto> GetById(int id)
         {
-            var borderCrossing = _borderCrossings.GetById(id);
+            var borderCrossing = _repository.GetById(id);
             if (borderCrossing != null)
             {
                 return Ok(_mapper.Map<BorderCrossingReadDto>(borderCrossing));
@@ -42,46 +42,46 @@ namespace logistic_app_api.Controllers
             return NotFound();
         }
 
-        //POST api/bordercrossing
+        //POST api/bordercrossings
         [HttpPost]
         public ActionResult<BorderCrossingReadDto> Create(BorderCrossingCreateDto _borderCrossing)
         {
             var borderCrossing = _mapper.Map<BorderCrossing>(_borderCrossing);
-            _borderCrossings.Create(borderCrossing);
-            _borderCrossings.SaveChanges();
+            _repository.Create(borderCrossing);
+            _repository.SaveChanges();
 
             var response = _mapper.Map<BorderCrossingReadDto>(borderCrossing);
 
             return Ok(response);
         }
 
-        //PUT api/bordercrossing/{id}
+        //PUT api/bordercrossings/{id}
         [HttpPut("{id}")]
         public ActionResult Update(int id, BorderCrossingUpdateDto borderCrossingUpdateDto)
         {
-            var orderCrossingFromRepo = _borderCrossings.GetById(id);
-            if (orderCrossingFromRepo == null)
+            var borderCrossingFromRepo = _repository.GetById(id);
+            if (borderCrossingFromRepo == null)
             {
                 return NotFound();
             }
-            _mapper.Map(borderCrossingUpdateDto, orderCrossingFromRepo);
-            _borderCrossings.Update(orderCrossingFromRepo);
-            _borderCrossings.SaveChanges();
+            _mapper.Map(borderCrossingUpdateDto, borderCrossingFromRepo);
+            _repository.Update(borderCrossingFromRepo);
+            _repository.SaveChanges();
 
             return NoContent();
         }
 
-        //DELETE api/bordercrossing/{id}
+        //DELETE api/bordercrossings/{id}
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var carFromRepo = _borderCrossings.GetById(id);
+            var carFromRepo = _repository.GetById(id);
             if (carFromRepo == null)
             {
                 return NotFound();
             }
-            _borderCrossings.Delete(carFromRepo);
-            _borderCrossings.SaveChanges();
+            _repository.Delete(carFromRepo);
+            _repository.SaveChanges();
 
             return NoContent();
         }
