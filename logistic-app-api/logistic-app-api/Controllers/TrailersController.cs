@@ -24,7 +24,7 @@ namespace logistic_app_api.Controllers
 
         //GET api/trailers
         [HttpGet]
-        public ActionResult<IEnumerable<TrailersReadDto>> GetAllCars()
+        public ActionResult<IEnumerable<TrailersReadDto>> GetAll()
         {
             var cars = _trailers.GetAll();
             return Ok(_mapper.Map<IEnumerable<TrailersReadDto>>(cars));
@@ -32,7 +32,7 @@ namespace logistic_app_api.Controllers
 
         //GET api/trailers/{id}
         [HttpGet("{id}")]
-        public ActionResult<TrailerReadDto> GetCarById(int id)
+        public ActionResult<TrailerReadDto> GetById(int id)
         {
             var car = _trailers.GetById(id);
             if (car != null)
@@ -44,7 +44,7 @@ namespace logistic_app_api.Controllers
 
         //POST api/trailers
         [HttpPost]
-        public ActionResult<TrailerReadDto> CreateCar(TrailerCreateDto _trailer)
+        public ActionResult<TrailerReadDto> Create(TrailerCreateDto _trailer)
         {
             var trailer = _mapper.Map<Trailer>(_trailer);
             _trailers.Create(trailer);
@@ -57,7 +57,7 @@ namespace logistic_app_api.Controllers
 
         //PUT api/trailers/{id}
         [HttpPut("{id}")]
-        public ActionResult UpdateCar(int id, TrailerUpdateDto trailerUpdateDto)
+        public ActionResult Update(int id, TrailerUpdateDto trailerUpdateDto)
         {
             var trailerFromRepo = _trailers.GetById(id);
             if (trailerFromRepo == null)
@@ -73,7 +73,7 @@ namespace logistic_app_api.Controllers
 
         //DELETE api/trailers/{id}
         [HttpDelete("{id}")]
-        public ActionResult DeleteCar(int id)
+        public ActionResult Delete(int id)
         {
             var trailerFromRepo = _trailers.GetById(id);
             if (trailerFromRepo == null)

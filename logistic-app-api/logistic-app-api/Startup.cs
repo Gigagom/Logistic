@@ -26,7 +26,6 @@ namespace logictic_app_api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<LogisticContext>(opt => opt.UseSqlServer
@@ -36,12 +35,17 @@ namespace logictic_app_api
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            services.AddScoped<IRepository<BorderCrossing>, BorderCrossingsRepository>();
             services.AddScoped<IRepository<Car>, CarsRepository>();
+            services.AddScoped<IRepository<Client>, ClientsRepository>();
+            services.AddScoped<IRepository<Customs>, CustomsRepository>();
+            services.AddScoped<IRepository<Declarant>, DeclarantsRepository>();
+            services.AddScoped<IRepository<Destination>, DestinationsRepository>();
             services.AddScoped<IRepository<Trailer>, TrailersRepository>();
-            
+            services.AddScoped<IRepository<User>,UsersRepository>();
+            services.AddScoped<IRepository<DeliveryTask>, DeliveryTasksRepository>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

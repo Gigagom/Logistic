@@ -24,7 +24,7 @@ namespace logistic_app_api.Controllers
 
         //GET api/cars
         [HttpGet]
-        public ActionResult<IEnumerable<CarReadDto>> GetAllCars()
+        public ActionResult<IEnumerable<CarReadDto>> GetAll()
         {
             var cars = _cars.GetAll();
             return Ok(_mapper.Map<IEnumerable<CarsReadDto>>(cars));
@@ -32,7 +32,7 @@ namespace logistic_app_api.Controllers
 
         //GET api/cars/{id}
         [HttpGet("{id}")]
-        public ActionResult<CarReadDto> GetCarById(int id)
+        public ActionResult<CarReadDto> GetById(int id)
         {
             var car = _cars.GetById(id);
             if (car != null)
@@ -44,7 +44,7 @@ namespace logistic_app_api.Controllers
 
         //POST api/cars
         [HttpPost]
-        public ActionResult<CarReadDto> CreateCar(CarCreateDto _car)
+        public ActionResult<CarReadDto> Create(CarCreateDto _car)
         {
             var car = _mapper.Map<Car>(_car);
             _cars.Create(car);
@@ -57,7 +57,7 @@ namespace logistic_app_api.Controllers
 
         //PUT api/cars/{id}
         [HttpPut("{id}")]
-        public ActionResult UpdateCar(int id, CarUpdateDto carUpdateDto)
+        public ActionResult Update(int id, CarUpdateDto carUpdateDto)
         {
             var carFromRepo = _cars.GetById(id);
             if (carFromRepo == null)
@@ -73,7 +73,7 @@ namespace logistic_app_api.Controllers
 
         //DELETE api/cars/{id}
         [HttpDelete("{id}")]
-        public ActionResult DeleteCar(int id)
+        public ActionResult Delete(int id)
         {
             var carFromRepo = _cars.GetById(id);
             if (carFromRepo == null)
