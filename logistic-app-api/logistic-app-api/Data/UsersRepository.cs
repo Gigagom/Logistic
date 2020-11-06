@@ -1,4 +1,5 @@
 ﻿using logistic_app_api.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,8 @@ namespace logistic_app_api.Data
 
         public IEnumerable<User> GetAll()
         {
-            return _context.Users.ToList();
+            var _users = _context.Users.Include(u=>u.User_position).ToList();
+            return _users;
         }
 
         public User GetById(int id)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using logistic_app_api.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,17 +9,11 @@ namespace logistic_app_api.Dtos.Users
 {
     public class UserUpdateDto
     {
-        public enum Position
-        {
-            Admin,
-            Driver
-        }
-
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
         [Required]
         public string Password { get; set; }
-        public Position User_position { get; set; }
+        public UserPosition User_position { get; set; }
     }
 }

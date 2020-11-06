@@ -6,16 +6,12 @@ using System.Threading.Tasks;
 
 namespace logistic_app_api.Models
 {
-    public class User
+    public class UserPosition
     {
         [Key]
         public int Id { get; set; }
         [Required]
-        [MaxLength(100)]
+        [MaxLength(50)]
         public string Name { get; set; }
-        [Required]
-        public string Password { get; set; }
-        public UserPosition User_position { get; set; }
     }
-    
 }
