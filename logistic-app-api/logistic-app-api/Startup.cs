@@ -30,7 +30,15 @@ namespace logictic_app_api
         {
             services.AddDbContext<LogisticContext>(opt => opt.UseSqlServer
                 (Configuration.GetConnectionString("LogisticConnction")));
-            
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:8080");
+                    });
+            });
+
             services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -56,6 +64,8 @@ namespace logictic_app_api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
