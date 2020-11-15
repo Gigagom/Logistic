@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <MenuList/>
+    <Map/>
     <router-view/>
   </div>
 </template>
@@ -8,10 +9,12 @@
 <script>
 
 import MenuList from '@/components/MenuList'
+import Map from '@/components/Map'
 export default {
   name: 'App',  
   components: {
-    MenuList
+    MenuList,
+    Map
   }
 }
 </script>
