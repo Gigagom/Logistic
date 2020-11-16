@@ -1,11 +1,12 @@
 <template>
     <div>
-        <h1>Cars</h1>        
+        <h1>Cars</h1>
+        <input type="text" placeholder="Поиск" v-model="search">        
         <button  v-on:click.prevent="newCar">Добавить</button>
         <Loader v-if="loading"/>
-        <ul v-else-if="CarsList.length">
+        <ul v-else-if="searchCars.length">
             <Car
-                v-for="(car, i) of CarsList" :key="car.id"
+                v-for="(car, i) of searchCars" :key="car.id"
                 v-bind:car="car" 
                 v-bind:index="i"
                 @remove-car="removeCar"
@@ -42,7 +43,17 @@ export default {
             CarsList:[],
             loading: true,
             carForm:false,
-            car:{id:null,brand:null,model:null,number:null,mileage:null,fuel_consumption:null}
+            car:{id:null,brand:null,model:null,number:null,mileage:null,fuel_consumption:null},
+            search:""
+        }
+    },
+    computed:{
+        searchCars(){
+            if(this.search.length){
+                return this.CarsList.filter(c => c.brand.toLowerCase().startsWith(this.search.toLowerCase()) || c.model.toLowerCase().startsWith(this.search.toLowerCase()) || c.number.toLowerCase().startsWith(this.search.toLowerCase()))
+            }else{
+                return this.CarsList
+            }
         }
     },
     methods:{
