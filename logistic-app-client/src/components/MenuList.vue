@@ -17,9 +17,13 @@ export default {
         menuItems:[
             {id:1,title:'Главная',url:'/'},
             {id:2,title:'Заказы',url:'/orders'},
-            {id:3,title:'Автопарк',url:'/cars'},
-            {id:4,title:'Пользователи',url:'/users'},
-            {id:5,title:'Справочники',url:'/data'}
+            {id:3,title:'Автомобили',url:'/cars'},
+            {id:4,title:'Прицепы',url:'/trailers'},
+            {id:5,title:'Клиенты',url:'/clients'},
+            {id:6,title:'Пункты пропуска',url:'/bordercrossings'}, 
+            {id:7,title:'Таможни',url:'/customs'},       
+            {id:8,title:'Декларанты',url:'/declarants'},         
+            {id:9,title:'Пользователи',url:'/users'}
         ]
         }
     },

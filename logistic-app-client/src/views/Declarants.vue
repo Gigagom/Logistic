@@ -1,5 +1,5 @@
 <template>
     <div>
-        <h1>Data</h1>
+        <h1>Декларанты</h1>
     </div>
 </template>

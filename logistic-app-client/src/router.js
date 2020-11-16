@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/Home'
 
 Vue.use(Router)
 
@@ -19,12 +18,28 @@ export default new Router({
             component: () => import('@/views/Cars.vue')
         },
         {
-            path:'/users',
-            component: () => import('@/views/Users.vue')
+            path:'/trailers',
+            component: () => import('@/views/Trailers.vue')
         },
         {
-            path:'/data',
-            component: () => import('@/views/Data.vue')
+            path:'/clients',
+            component: () => import('@/views/Clients.vue')
+        },
+        {
+            path:'/bordercrossings',
+            component: () => import('@/views/BorderCrossings.vue')
+        },
+        {
+            path:'/customs',
+            component: () => import('@/views/Customs.vue')
+        },
+        {
+            path:'/declarants',
+            component: () => import('@/views/Declarants.vue')
+        },
+        {
+            path:'/users',
+            component: () => import('@/views/Users.vue')
         }
     ]
 })

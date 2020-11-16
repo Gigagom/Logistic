@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Cars</h1>
+        <h1>Автомобили</h1>
         <input type="text" placeholder="Поиск" v-model="search">        
         <button  v-on:click.prevent="newCar">Добавить</button>
         <Loader v-if="loading"/>
@@ -107,10 +107,10 @@ export default {
                     }
                 })
                 .then(response => console.log(response))
-                .finally(() =>  
-                    this.getCars(), 
-                    this.closeModal()  
-                ) 
+                .finally(() => {                    
+                    this.getCars() 
+                    this.closeModal()
+                })
             }else{
                 fetch('https://localhost:5001/api/cars/', 
                 { 
@@ -128,10 +128,10 @@ export default {
                 .then(response => response.json())
                 .then(json => {
                     console.log(json);
-                }).finally(() =>   
-                    this.getCars(), 
-                    this.closeModal()  
-                )
+                }).finally(() => {                    
+                    this.getCars() 
+                    this.closeModal()
+                })
             }
             
         }

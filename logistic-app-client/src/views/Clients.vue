@@ -1,5 +1,5 @@
 <template>
     <div>
-        <h1>Заказы</h1>
+        <h1>Клиенты</h1>
     </div>
 </template>

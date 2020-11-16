@@ -11,8 +11,8 @@
 .lds-dual-ring:after {
   content: " ";
   display: block;
-  width: 64px;
-  height: 64px;
+  width: 32px;
+  height: 32px;
   margin: 8px;
   border-radius: 50%;
   border: 6px solid rgb(0, 0, 0);
