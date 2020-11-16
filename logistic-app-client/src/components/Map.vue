@@ -1,3 +1,9 @@
 <template>
-    <div></div>
+    <div class="map"></div>
 </template>
+
+<style>
+.map {
+  height: 100vh;
+}   
+</style>
