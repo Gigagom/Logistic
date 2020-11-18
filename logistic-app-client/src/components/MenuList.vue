@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ul>
+        <ul class="menu-list">
             <MenuItem
                 v-for="item of menuItems" :key="item.id"
                 v-bind:item="item" 
@@ -33,8 +33,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 ul {
-    list-style:none;
+  list-style:none;
+}
+.menu-list {
+  margin-top: 80px;
 }
 </style>
