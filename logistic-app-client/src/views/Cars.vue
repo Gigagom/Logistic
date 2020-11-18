@@ -1,46 +1,46 @@
 <template>
-    <div class="cars">
+    <div class="list">
         <h1 class="title">Автомобили</h1>
-        <input class="cars__search form-control form-control-sm" type="text" placeholder="Поиск" v-model="search">        
-        <button class="btn btn-sm btn-secondary cars__btn"  v-on:click.prevent="newCar"><i>&#43;</i><span>Добавить</span></button>
+        <input class="field__search form-control form-control-sm" type="text" placeholder="Поиск" v-model="search">        
+        <button class="btn btn-sm btn-secondary new__btn"  v-on:click.prevent="newItem"><i>&#43;</i><span>Добавить</span></button>
         <Loader v-if="loading"/>
-        <ul class="cars-list" v-else-if="searchCars.length">
+        <ul class="items-list" v-else-if="searchItems.length">
             <Car
-                v-for="(car, i) of searchCars" :key="car.id"
-                v-bind:car="car" 
+                v-for="(item, i) of searchItems" :key="item.id"
+                v-bind:item="item" 
                 v-bind:index="i"
-                @remove-car="removeCar"
-                @get-car="getCar"
+                @remove-item="removeItem"
+                @get-item="getItem"
             />
         </ul>
         <p v-else>Список пуст</p>
-        <div v-if="carForm" class="modal">
-            <form id="CarFrom" class="modal__form" @submit.prevent="onSubmit">           
-                <input v-if="car.id" v-model="car.id" type="hidden">
+        <div v-if="Form" class="modal">
+            <form id="From" class="modal__form" @submit.prevent="onSubmit">           
+                <input v-if="item.id" v-model="item.id" type="hidden">
                 <div class="form-row">
                   <div class="col form-group">
                     <label for="brand">Брэнд</label>
-                    <input class="form-control" name="brand" required v-model="car.brand" type="text">
+                    <input class="form-control" name="brand" required v-model="item.brand" type="text">
                   </div>
                   <div class="col form-group">
                     <label for="model">Модель</label>
-                    <input class="form-control" name="model" v-model="car.model" type="text">
+                    <input class="form-control" name="model" v-model="item.model" type="text">
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="col form-group">
                     <label for="number">Номер</label>
-                    <input class="form-control" name="number" v-model="car.number" type="text">
+                    <input class="form-control" name="number" v-model="item.number" type="text">
                   </div>
                   <div class="col form-group">
                     <label for="mileage">Пробег</label>
-                    <input class="form-control" name="mileage" v-model="car.mileage" type="number">
+                    <input class="form-control" name="mileage" v-model="item.mileage" type="number">
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="col form-group">
                     <label for="fuel_consumption">Расход на 100 км</label>
-                    <input class="form-control" name="fuel_consumption" v-model="car.fuel_consumption" type="number">
+                    <input class="form-control" name="fuel_consumption" v-model="item.fuel_consumption" type="number">
                   </div>
                 </div>
                 <input class="btn btn-primary" type="submit" value="Сохранить">
@@ -56,63 +56,63 @@ import Car from '@/components/Car'
 export default {
     data(){
         return {
-            CarsList:[],
+            ItemsList:[],
             loading: true,
-            carForm:false,
-            car:{id:null,brand:null,model:null,number:null,mileage:null,fuel_consumption:null},
+            Form:false,
+            item:{id:null,brand:null,model:null,number:null,mileage:null,fuel_consumption:null},
             search:""
         }
     },
     computed:{
-        searchCars(){
+        searchItems(){
             if(this.search.length){
-                return this.CarsList.filter(c => c.brand.toLowerCase().startsWith(this.search.toLowerCase()) || c.model.toLowerCase().startsWith(this.search.toLowerCase()) || c.number.toLowerCase().startsWith(this.search.toLowerCase()))
+                return this.ItemsList.filter(c => c.brand.toLowerCase().startsWith(this.search.toLowerCase()) || c.model.toLowerCase().startsWith(this.search.toLowerCase()) || c.number.toLowerCase().startsWith(this.search.toLowerCase()))
             }else{
-                return this.CarsList
+                return this.ItemsList
             }
         }
     },
     methods:{
-        removeCar(id){
-            fetch('https://localhost:5001/api/cars/'+id, { method: 'DELETE'})
-            this.CarsList = this.CarsList.filter(c => c.id !== id)
+        async removeItem(id){
+            await fetch('https://localhost:5001/api/cars/'+id, { method: 'DELETE'})
+            this.ItemsList = this.ItemsList.filter(c => c.id !== id)
         },
-        getCars(){
-           fetch('https://localhost:5001/api/cars/',{
+        async getItems(){
+            await fetch('https://localhost:5001/api/cars/',{
                headers: {
                     'Cache-Control': 'no-cache'
                 }
            })
             .then(response => response.json())
             .then(json => {
-                this.CarsList = json                
+                this.ItemsList = json                
                 this.loading = false
             })
         },
-        getCar(id){
-            fetch('https://localhost:5001/api/cars/'+id)
+        async getItem(id){
+            await fetch('https://localhost:5001/api/cars/'+id)
             .then(response => response.json())
             .then(json => {
-                this.car = json;
+                this.item = json;
             }).finally(()=>this.openModal())
         },
-        newCar(){
-            this.car = {id:null,brand:null,model:null,number:null,mileage:null,fuel_consumption:null};
+        newItem(){
+            this.item = {id:null,brand:null,model:null,number:null,mileage:null,fuel_consumption:null};
             this.openModal()
         },
         openModal(){
-            this.carForm = true;
+            this.Form = true;
         },
         closeModal(){
-            this.carForm = false;
-            this.car = {id:null,brand:null,model:null,number:null,mileage:null,fuel_consumption:null};
+            this.Form = false;
+            this.item = {id:null,brand:null,model:null,number:null,mileage:null,fuel_consumption:null};
         },
-        onSubmit(){
-            if(this.car.id){
-                fetch('https://localhost:5001/api/cars/'+this.car.id, 
+        async onSubmit(){
+            if(this.item.id){
+                await fetch('https://localhost:5001/api/cars/'+this.item.id, 
                 { 
                     method: 'PUT',
-                    body: JSON.stringify(this.car, function(key, value){
+                    body: JSON.stringify(this.item, function(key, value){
                         if(key === "mileage" || key === "fuel_consumption"){
                             return parseFloat(value)
                         }                        
@@ -122,16 +122,15 @@ export default {
                         'Content-Type': 'application/json'
                     }
                 })
-                .then(response => console.log(response))
                 .finally(() => {                    
-                    this.getCars() 
+                    this.getItems() 
                     this.closeModal()
                 })
             }else{
-                fetch('https://localhost:5001/api/cars/', 
+                await fetch('https://localhost:5001/api/cars/', 
                 { 
                     method: 'POST',
-                    body: JSON.stringify(this.car, function(key, value){
+                    body: JSON.stringify(this.item, function(key, value){
                         if(key === "mileage" || key === "fuel_consumption"){
                             return parseFloat(value)
                         }                        
@@ -142,18 +141,16 @@ export default {
                     }
                 })
                 .then(response => response.json())
-                .then(json => {
-                    console.log(json);
-                }).finally(() => {                    
-                    this.getCars() 
+                .finally(() => {                    
+                    this.getItems() 
                     this.closeModal()
                 })
             }
             
         }
     },
-    mounted(){
-        this.getCars()
+    async mounted(){
+        this.getItems()
     },
     components:{
         Loader, Car
@@ -163,13 +160,13 @@ export default {
 
 <style lang="scss">
   
-.cars {
+.list {
   
-  &__btn {
+  .new__btn {
     margin-bottom: 8px;
   }
   
-  &__search {
+  .field__search {
     margin-bottom: 1.2rem;
   }
   
