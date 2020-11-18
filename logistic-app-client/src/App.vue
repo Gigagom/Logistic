@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <div class="row">
-      <div class="col">
+      <div class="col menu-wrap">
         <MenuList/>
       </div>      
       <div class="col-wide">
         <div class="row">
-          <div class="col-2">
+          <div class="col-2 sub-menu">
             <router-view/>
           </div>        
           <Map/>
@@ -29,7 +29,25 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+  
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+html {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+}
+body {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #4a4a4f;
+  text-align: left;
+}
 #app {
   width: 100%;
   height: 100%;
@@ -37,40 +55,189 @@ export default {
   margin: 0;
 }
 div, h1 {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
-ul{
-    list-style:none;
-    padding: 0;
-    margin: 0;
+  
+button, [type="button"], [type="reset"], [type="submit"] {
+  -webkit-appearance: button;
+}
+  
+.btn {
+  display: inline-block;
+  font-weight: 500;
+  color: $dark;
+  cursor: pointer;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  background-color: transparent;
+  border: 2px solid transparent;
+  padding: 0.45rem 0.85rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.9rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  
+  &:focus {
+    outline: none;
+  }
+  
+  &-sm {
+    padding: 0.12rem 0.8rem;
+    font-size: 0.82rem;
+    line-height: 1.2;
+    border-radius: 0.5rem;
+  }
+  
+  &-secondary {
+    background-color: $white;
+    border-color: $primary;
+    
+    &:hover {
+      background-color: darken($white, 10%);
+    }
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 0.2rem rgba($primary-light, 0.25);
+    }
+    
+    i {
+      color: $primary;
+    }
+  }
+  
+  &-primary {
+    color: $white;
+    background-color: $primary;
+    border-color: $primary;
+    
+    &:hover {
+      background-color: darken($primary, 10%);
+      border-color: darken($primary, 10%);
+    }
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 0.2rem rgba($primary-light, 0.25);
+    }
+  }
+  
+  i {
+    margin-left: -2px;
+    margin-right: 8px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    vertical-align:middle
+  }
+  span {
+    vertical-align:middle
+  }
+}
+  
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.9rem + 2px);
+  padding: 0.40rem 0.80rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: $dark;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid $gray;
+  border-radius: 0.37rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba($primary-light, 0.25);
+    border-color: $primary-light;
+  }
+  
+  &-sm {
+    height: calc(1.2em + 0.7rem + 2px);
+    padding: 0.30rem 0.45rem;
+    font-size: 0.82rem;
+    line-height: 1.2;
+    border-radius: 0.2rem;
+  }
+}
+  
+.form-group {
+  margin-bottom: 1.2rem;
+  
+  label {
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+}
+  
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -5px;
+  margin-left: -5px;
+  
+  .col {
+    padding-left: 5px;
+    padding-right: 5px;
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+  }
+}
+  
+a {
+  text-decoration: none;
+  background-color: transparent;
+  color: $dark;
+}
+ul {
+  list-style:none;
+  padding: 0;
+  margin: 0;
 }
 .row {
   display: flex;
   flex-wrap: wrap;
 }
-.col, .col-wide {
+.col, .col-2, .col-wide {
   width: 100%;
   position: relative;
 }
 .col {
   flex: 0 0 15%;
   max-width: 15%;  
-  background-color: gray;
+  
+  &-2 {
+    flex: 0 0 20%;
+    max-width: 20%;  
+    height: 100vh;
+    
+    &:empty {
+      display: none;
+    }
+  }
+  
+  &-wide {
+    max-width: 100%;
+    flex-grow: 1;
+    flex-basis: 0;
+    background-color: coral;
+    padding: 0;
+  }
 }
-.col-2 {
-  flex: 0 0 20%;
-  max-width: 20%;  
-  background-color: whitesmoke;
-  height: 100vh;
+.menu-wrap {
+  background-color: $white;
 }
-.col-2:empty{
-  display: none;
+.sub-menu {
+  background-color: $light;
+  padding: 0 20px;
+  padding-top: 80px;
+  position: inherit;
 }
-.col-wide {
-  max-width: 100%;
-  flex-grow: 1;
-  flex-basis: 0;
-  background-color: coral;
-}
+
 </style>
