@@ -22,6 +22,7 @@ namespace logistic_app_api.Data
             {
                 throw new ArgumentNullException(nameof(item));
             }
+            item.User_position = _context.UserPositions.FirstOrDefault(t => t.Id == item.User_position.Id);
             _context.Users.Add(item);
         }
 
@@ -42,7 +43,7 @@ namespace logistic_app_api.Data
 
         public User GetById(int id)
         {
-            return _context.Users.FirstOrDefault(t => t.Id == id);
+            return _context.Users.Include(u => u.User_position).FirstOrDefault(t => t.Id == id);
         }
 
         public bool SaveChanges()
@@ -52,6 +53,7 @@ namespace logistic_app_api.Data
 
         public void Update(User item)
         {
+            item.User_position = _context.UserPositions.FirstOrDefault(t => t.Id == item.User_position.Id);
             //nothing
         }
     }

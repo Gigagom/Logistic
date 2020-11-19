@@ -238,6 +238,7 @@ ul {
   padding: 0 20px;
   padding-top: 80px;
   position: inherit;
+  overflow-y: auto;
 }
 
 </style>
