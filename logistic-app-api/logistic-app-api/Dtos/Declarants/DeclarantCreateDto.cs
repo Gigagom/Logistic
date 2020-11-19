@@ -8,6 +8,7 @@ namespace logistic_app_api.Dtos.Declarants
 {
     public class DeclarantCreateDto
     {
+        public string Name { get; set; }
         public string Info { get; set; }
     }
 }

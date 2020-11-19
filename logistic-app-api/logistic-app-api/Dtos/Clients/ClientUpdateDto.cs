@@ -8,6 +8,7 @@ namespace logistic_app_api.Dtos.Clients
 {
     public class ClientUpdateDto
     {
+        public string Name { get; set; }
         public string Info { get; set; }
     }
 }
