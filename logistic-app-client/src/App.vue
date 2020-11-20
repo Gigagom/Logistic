@@ -21,7 +21,7 @@
 import MenuList from '@/components/MenuList'
 import Map from '@/components/Map'
 export default {
-  name: 'App',  
+  name: 'App', 
   components: {
     MenuList,
     Map

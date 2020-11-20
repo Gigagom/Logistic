@@ -2,6 +2,7 @@
 using logistic_app_api.Data;
 using logistic_app_api.Dtos.BorderCrossings;
 using logistic_app_api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace logistic_app_api.Controllers
 {
     [Route("api/bordercrossings")]
     [ApiController]
+    [Authorize]
     public class BorderCrossingsController : ControllerBase
     {
         private readonly BorderCrossingsRepository _repository;

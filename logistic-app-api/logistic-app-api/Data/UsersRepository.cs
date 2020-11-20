@@ -56,5 +56,10 @@ namespace logistic_app_api.Data
             item.User_position = _context.UserPositions.FirstOrDefault(t => t.Id == item.User_position.Id);
             //nothing
         }
+
+        public User Login(string username, string password)
+        {
+            return _context.Users.Include(u => u.User_position).FirstOrDefault(t => t.Name == username && t.Password == password);
+        }
     }
 }

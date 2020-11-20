@@ -2,6 +2,7 @@
 using logistic_app_api.Data;
 using logistic_app_api.Dtos.Trailers;
 using logistic_app_api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace logistic_app_api.Controllers
 {
     [Route("api/trailers")]
     [ApiController]
+    [Authorize]
     public class TrailersController : ControllerBase
     {
         private readonly TrailersRepository _repository;

@@ -74,23 +74,41 @@ export default {
     },
     methods:{
         async removeItem(id){
-            await fetch('https://localhost:5001/api/cars/'+id, { method: 'DELETE'})
+            await fetch('https://localhost:5001/api/cars/'+id, { 
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
             this.ItemsList = this.ItemsList.filter(c => c.id !== id)
         },
         async getItems(){
             await fetch('https://localhost:5001/api/cars/',{
-               headers: {
-                    'Cache-Control': 'no-cache'
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
                 }
-           })
+            })
             .then(response => response.json())
             .then(json => {
                 this.ItemsList = json                
                 this.loading = false
             })
+            .catch(function (error) {
+                console.error(error.response);
+            });
         },
         async getItem(id){
-            await fetch('https://localhost:5001/api/cars/'+id)
+            await fetch('https://localhost:5001/api/cars/'+id,{
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
             .then(response => response.json())
             .then(json => {
                 this.item = json;
@@ -119,7 +137,8 @@ export default {
                         return value
                     }),
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer '+ localStorage.getItem('jwt')
                     }
                 })
                 .finally(() => {                    
@@ -137,7 +156,8 @@ export default {
                         return value
                     }),
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer '+ localStorage.getItem('jwt')
                     }
                 })
                 .then(response => response.json())

@@ -6,6 +6,7 @@
                 v-bind:item="item" 
             />
         </ul>
+        <button  v-on:click.prevent="Logout">Выйти</button>
     </div>
 </template>
 
@@ -29,6 +30,12 @@ export default {
     },
     components:{
         MenuItem
+    },
+    methods:{
+        Logout(){
+            localStorage.setItem('jwt',null)
+            this.$router.push('/login')
+        }
     }    
 }
 </script>
