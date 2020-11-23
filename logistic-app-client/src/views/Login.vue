@@ -1,19 +1,21 @@
 <template>
     <div>
-        Авторизация
-        <form>
-            <label for="login" >Логин</label>
-            <div>
-                <input id="login" type="email" v-model="item.name" required autofocus>
+        <h1>Вход</h1>
+        <form class="modal__form">            
+            <div class="form-row">
+                <div class="col form-group">
+                    <label for="login" >Логин</label>
+                    <input class="form-control" id="login" type="email" v-model="item.name" required autofocus>
+                </div>
             </div>
-            <div>
-                <label for="password" >Пароль</label>
-                <div>
-                <input id="password" type="password" v-model="item.password" required>
+            <div class="form-row">
+                <div class="col form-group">
+                    <label for="password" >Пароль</label>
+                    <input class="form-control" id="password" type="password" v-model="item.password" required>
                 </div>
             </div>
             <div>
-                <button type="submit" v-on:click.prevent="handleSubmit">Войти</button>
+                <button class="btn btn-sm btn-secondary new__btn" type="submit" v-on:click.prevent="handleSubmit">Войти</button>
             </div>
         </form>
     </div>

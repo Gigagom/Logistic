@@ -5,8 +5,9 @@
                 v-for="item of menuItems" :key="item.id"
                 v-bind:item="item" 
             />
+            <button class="btn btn-sm btn-secondary new__btn"  v-on:click.prevent="Logout">Выйти</button>
         </ul>
-        <button  v-on:click.prevent="Logout">Выйти</button>
+       
     </div>
 </template>
 

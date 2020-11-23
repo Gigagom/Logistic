@@ -37,13 +37,17 @@ namespace logistic_app_api.Data
 
         public IEnumerable<User> GetAll()
         {
-            var _users = _context.Users.Include(u=>u.User_position).ToList();
+            var _users = _context.Users
+                .Include(u=>u.User_position)
+                .ToList();
             return _users;
         }
 
         public User GetById(int id)
         {
-            return _context.Users.Include(u => u.User_position).FirstOrDefault(t => t.Id == id);
+            return _context.Users
+                .Include(u => u.User_position)
+                .FirstOrDefault(t => t.Id == id);
         }
 
         public bool SaveChanges()
