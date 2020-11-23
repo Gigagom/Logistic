@@ -19,17 +19,17 @@
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Дата загрузки</label>
-                        <input class="form-control" name="StartDate" required v-model="item.StartDate" type="date">
+                        <input class="form-control" name="StartDate" required v-model="item.startDate" type="date">
                     </div>
                     <div class="col form-group">
                         <label>Дата доставки</label>
-                        <input class="form-control" name="FinishDate" required v-model="item.FinishDate" type="date">
+                        <input class="form-control" name="FinishDate" required v-model="item.finishDate" type="date">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Водитель</label>
-                        <select class="form-control" v-model="item.Driver">
+                        <select class="form-control" v-model="item.driver.id">
                             <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
                             <option v-for="Driver of DriversList" :key="Driver.id" :value=Driver.id>{{Driver.name}}</option>
                         </select>
@@ -38,14 +38,14 @@
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Автомобиль</label>
-                        <select class="form-control" v-model="item.Car">
+                        <select class="form-control" v-model="item.car.id">
                             <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
                             <option v-for="Car of CarsList" :key="Car.id" :value=Car.id>{{Car.brand}} {{Car.number}}</option>
                         </select>
                     </div>
                     <div class="col form-group">
                         <label>Трейлер</label>
-                        <select class="form-control" v-model="item.Trailer">
+                        <select class="form-control" v-model="item.trailer.id">
                             <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
                             <option v-for="Trailer of TrailersList" :key="Trailer.id" :value=Trailer.id>{{Trailer.brand}} {{Trailer.number}}</option>
                         </select>
@@ -54,14 +54,14 @@
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Клиент</label>
-                        <select class="form-control" v-model="item.Client">
+                        <select class="form-control" v-model="item.client.id">
                             <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
                             <option v-for="Client of ClientsList" :key="Client.id" :value=Client.id>{{Client.name}}</option>
                         </select>
                     </div>
                     <div class="col form-group">
                         <label>Декларант</label>
-                        <select class="form-control" v-model="item.Declarant">
+                        <select class="form-control" v-model="item.declarant.id">
                             <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
                             <option v-for="Declarant of DeclarantsList" :key="Declarant.id" :value=Declarant.id>{{Declarant.name}}</option>
                         </select>
@@ -70,14 +70,14 @@
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Таможня</label>
-                        <select class="form-control" v-model="item.Customs">
+                        <select class="form-control" v-model="item.customs.id">
                             <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
                             <option v-for="Customs of CustomssList" :key="Customs.id" :value=Customs.id>{{Customs.name}}</option>
                         </select>
                     </div>
                     <div class="col form-group">
                         <label>Пункт пропуска</label>
-                        <select class="form-control" v-model="item.BorderCrossing">
+                        <select class="form-control" v-model="item.borderCrossing.id">
                             <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
                             <option v-for="BorderCrossing of BorderCrossingsList" :key="BorderCrossing.id" :value=BorderCrossing.id>{{BorderCrossing.name}}</option>
                         </select>
@@ -86,35 +86,35 @@
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Адрес загрузки</label>
-                        <input class="form-control" name="From" required v-model="item.From" type="text">
+                        <input class="form-control" name="From" required v-model="item.from" type="text">
                     </div>
                     <div class="col form-group">
                         <label>Контакт на загрузке</label>
-                        <input class="form-control" name="To" required v-model="item.FromContact" type="text">
+                        <input class="form-control" name="To" required v-model="item.fromContact" type="text">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Адрес доставки</label>
-                        <input class="form-control" name="To" required v-model="item.To" type="text">
+                        <input class="form-control" name="To" required v-model="item.to" type="text">
                     </div>
                     <div class="col form-group">
                         <label>Ящик компании</label>
-                        <input class="form-control" name="To" required v-model="item.ToCompanyBox" type="text">
+                        <input class="form-control" name="To" required v-model="item.toCompanyBox" type="text">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Номер контейнера</label>
-                        <input class="form-control" name="ContainerNumber" required v-model="item.ContainerNumber" type="text">
+                        <input class="form-control" name="ContainerNumber" required v-model="item.containerNumber" type="text">
                     </div>
                     <div class="col form-group">
                         <label>Вес контейнера</label>
-                        <input class="form-control" name="Weight" required v-model="item.Weight" type="number">
+                        <input class="form-control" name="Weight" required v-model="item.weight" type="number">
                     </div>
                 </div>
                 <input class="btn btn-primary" type="submit" value="Сохранить">
-                <button class="modal__form__close" v-on:click.prevent="closeModal"><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg></button>
+                <button class="modal-big__form__close" v-on:click.prevent="closeModal"><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg></button>
             </form>
         </div>
     </div>
@@ -131,22 +131,22 @@ export default {
             Form:false,
             item:{
                 id:null,
-                Driver:null,
-                Car:null,
-                Trailer:null,
-                From:null,
-                FromContact:null,
-                To:null,
-                ToCompanyBox:null,
-                Weight:null,
-                ContainerNumber:null,
-                Client:null,
-                Declarant:null,
-                Customs:null,
-                BorderCrossing:null,
-                StartDate:null,
-                FinishDate:null,
-                Status:null
+                driver:{id:null},
+                car:{id:null},
+                trailer:{id:null},
+                from:null,
+                fromContact:null,
+                to:null,
+                toCompanyBox:null,
+                weight:null,
+                containerNumber:null,
+                client:{id:null},
+                declarant:{id:null},
+                customs:{id:null},
+                borderCrossing:{id:null},
+                startDate:null,
+                finishDate:null,
+                status:null
             },
             search:"",
             DriversList:[],
@@ -194,6 +194,90 @@ export default {
             })
         },
         async getItem(id){
+            await fetch('https://localhost:5001/api/users/',{
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                this.DriversList = json                
+                this.loading = false
+            })
+            await fetch('https://localhost:5001/api/cars/',{
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                this.CarsList = json                
+                this.loading = false
+            })
+            await fetch('https://localhost:5001/api/trailers/',{
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                this.TrailersList = json                
+                this.loading = false
+            })
+            await fetch('https://localhost:5001/api/clients/',{
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                this.ClientsList = json                
+                this.loading = false
+            })
+            await fetch('https://localhost:5001/api/declarants/',{
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                this.DeclarantsList = json                
+                this.loading = false
+            })
+            await fetch('https://localhost:5001/api/customs/',{
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                this.CustomssList = json                
+                this.loading = false
+            })
+            await fetch('https://localhost:5001/api/bordercrossings/',{
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                this.BorderCrossingsList = json                
+                this.loading = false
+            })
             await fetch('https://localhost:5001/api/deliverytasks/'+id,{
                headers: {
                     'Content-Type': 'application/json',
@@ -204,6 +288,8 @@ export default {
             .then(response => response.json())
             .then(json => {
                 this.item = json;
+                this.item.startDate = this.item.startDate.split('T')[0];
+                this.item.finishDate = this.item.finishDate.split('T')[0];
             }).finally(
                 ()=>this.openModal()
             )
@@ -295,22 +381,22 @@ export default {
             })
             this.item = {
                 id:null,
-                Driver:null,
-                Car:null,
-                Trailer:null,
-                From:null,
-                FromContact:null,
-                To:null,
-                ToCompanyBox:null,
-                Weight:null,
-                ContainerNumber:null,
-                Client:null,
-                Declarant:null,
-                Customs:null,
-                BorderCrossing:null,
-                StartDate:null,
-                FinishDate:null,
-                Status:null
+                driver:{id:null},
+                car:{id:null},
+                trailer:{id:null},
+                from:null,
+                fromContact:null,
+                to:null,
+                toCompanyBox:null,
+                weight:null,
+                containerNumber:null,
+                client:{id:null},
+                declarant:{id:null},
+                customs:{id:null},
+                borderCrossing:{id:null},
+                startDate:null,
+                finishDate:null,
+                status:0
             };
             this.openModal()
         },
@@ -321,22 +407,22 @@ export default {
             this.Form = false;
             this.item = {
                 id:null,
-                Driver:null,
-                Car:null,
-                Trailer:null,
-                From:null,
-                FromContact:null,
-                To:null,
-                ToCompanyBox:null,
-                Weight:null,
-                ContainerNumber:null,
-                Client:null,
-                Declarant:null,
-                Customs:null,
-                BorderCrossing:null,
-                StartDate:null,
-                FinishDate:null,
-                Status:null
+                driver:{id:null},
+                car:{id:null},
+                trailer:{id:null},
+                from:null,
+                fromContact:null,
+                to:null,
+                toCompanyBox:null,
+                weight:null,
+                containerNumber:null,
+                client:{id:null},
+                declarant:{id:null},
+                customs:{id:null},
+                borderCrossing:{id:null},
+                startDate:null,
+                finishDate:null,
+                status:null
             };
             this.selectedItem = null;
         },
@@ -346,8 +432,8 @@ export default {
                 { 
                     method: 'PUT',
                     body: JSON.stringify(this.item, function(key, value){
-                        if(key === "user_position"){
-                            return {"id":parseFloat(value.id)}
+                        if(key === "weight"){
+                            return parseFloat(value)
                         }                        
                         return value
                     }),
@@ -365,9 +451,9 @@ export default {
                 { 
                     method: 'POST',
                     body: JSON.stringify(this.item, function(key, value){
-                        if(key === "user_position"){
-                            return {"id":parseFloat(value)}
-                        }                        
+                        if(key === "weight"){
+                            return parseFloat(value)
+                        }                         
                         return value
                     }),
                     headers: {

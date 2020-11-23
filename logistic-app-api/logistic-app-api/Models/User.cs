@@ -10,10 +10,8 @@ namespace logistic_app_api.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
         [MaxLength(100)]
         public string Name { get; set; }
-        [Required]
         public string Password { get; set; }
         public UserPosition User_position { get; set; }
     }

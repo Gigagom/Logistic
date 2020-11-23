@@ -2,6 +2,7 @@
     <li class="list-item">
         <span class="item-item__info" v-on:click="$emit('get-item', item.id)">
             <strong>Заказ №{{item.id}}</strong>
+            <br> <span class="item-item__info__number">{{status}}</span>
         </span>
         <button class="btn item-item__close" v-on:click="$emit('remove-item', item.id)">&times;</button>
     </li>
@@ -15,6 +16,23 @@ export default {
             required: true
         },
         index: Number
+    },
+    computed:{
+        status(){
+            let word = null
+            switch (this.item.status) {
+            case 0:
+                word = "Ожидает выполнения"
+                break;
+            case 1:
+                word = 'В пути'
+                break;
+            case 2:
+                word = 'Завершен'
+                break;
+            }
+            return word
+        }
     }
 }
 </script>
