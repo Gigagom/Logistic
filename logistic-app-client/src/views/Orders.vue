@@ -1,20 +1,19 @@
 <template>
     <div class="list">
         <h1 class="title">Заказы</h1>
-        <input class="field__search form-control form-control-sm" type="text" placeholder="Поиск" v-model="search">        
+        <!-- <input class="field__search form-control form-control-sm" type="text" placeholder="Поиск" v-model="search">         -->
         <button class="btn btn-sm btn-secondary new__btn"  v-on:click.prevent="newItem"><i>&#43;</i><span>Добавить</span></button>
         <Loader v-if="loading"/>
         <ul class="items-list" v-else-if="searchItems.length">
-            <User
-                v-for="(item, i) of searchItems" :key="item.id"
-                v-bind:item="item" 
-                v-bind:index="i"
+            <Order
+                v-for="(item) of searchItems" :key="item.id"
+                v-bind:item="item"
                 @remove-item="removeItem"
                 @get-item="getItem"
             />
         </ul>
         <p v-else>Список пуст</p>
-        <div v-if="Form" class="modal">
+        <div v-if="Form" class="modal-big">
             <form id="From" class="modal__form" @submit.prevent="onSubmit">           
                 <input v-if="item.id" v-model="item.id" type="hidden">
                 <div class="form-row">
@@ -30,81 +29,88 @@
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Водитель</label>
-                        <select class="form-control">
-
+                        <select class="form-control" v-model="item.Driver">
+                            <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
+                            <option v-for="Driver of DriversList" :key="Driver.id" :value=Driver.id>{{Driver.name}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Автомобиль</label>
-                        <select class="form-control">
-
+                        <select class="form-control" v-model="item.Car">
+                            <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
+                            <option v-for="Car of CarsList" :key="Car.id" :value=Car.id>{{Car.brand}} {{Car.number}}</option>
                         </select>
                     </div>
                     <div class="col form-group">
                         <label>Трейлер</label>
-                        <select class="form-control">
-
+                        <select class="form-control" v-model="item.Trailer">
+                            <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
+                            <option v-for="Trailer of TrailersList" :key="Trailer.id" :value=Trailer.id>{{Trailer.brand}} {{Trailer.number}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Клиент</label>
-                        <select class="form-control">
-
+                        <select class="form-control" v-model="item.Client">
+                            <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
+                            <option v-for="Client of ClientsList" :key="Client.id" :value=Client.id>{{Client.name}}</option>
                         </select>
                     </div>
                     <div class="col form-group">
                         <label>Декларант</label>
-                        <select class="form-control">
-
+                        <select class="form-control" v-model="item.Declarant">
+                            <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
+                            <option v-for="Declarant of DeclarantsList" :key="Declarant.id" :value=Declarant.id>{{Declarant.name}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Таможня</label>
-                        <select class="form-control">
-
+                        <select class="form-control" v-model="item.Customs">
+                            <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
+                            <option v-for="Customs of CustomssList" :key="Customs.id" :value=Customs.id>{{Customs.name}}</option>
                         </select>
                     </div>
                     <div class="col form-group">
                         <label>Пункт пропуска</label>
-                        <select class="form-control">
-
+                        <select class="form-control" v-model="item.BorderCrossing">
+                            <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
+                            <option v-for="BorderCrossing of BorderCrossingsList" :key="BorderCrossing.id" :value=BorderCrossing.id>{{BorderCrossing.name}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Адрес загрузки</label>
-                        <input class="form-control" name="From" required v-model="item.FinishDate" type="text">
+                        <input class="form-control" name="From" required v-model="item.From" type="text">
                     </div>
                     <div class="col form-group">
                         <label>Контакт на загрузке</label>
-                        <input class="form-control" name="To" required v-model="item.FinishDate" type="text">
+                        <input class="form-control" name="To" required v-model="item.FromContact" type="text">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Адрес доставки</label>
-                        <input class="form-control" name="To" required v-model="item.FinishDate" type="text">
+                        <input class="form-control" name="To" required v-model="item.To" type="text">
                     </div>
                     <div class="col form-group">
                         <label>Ящик компании</label>
-                        <input class="form-control" name="To" required v-model="item.FinishDate" type="text">
+                        <input class="form-control" name="To" required v-model="item.ToCompanyBox" type="text">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Номер контейнера</label>
-                        <input class="form-control" name="ContainerNumber" required v-model="item.FinishDate" type="text">
+                        <input class="form-control" name="ContainerNumber" required v-model="item.ContainerNumber" type="text">
                     </div>
                     <div class="col form-group">
                         <label>Вес контейнера</label>
-                        <input class="form-control" name="Weight" required v-model="item.FinishDate" type="number">
+                        <input class="form-control" name="Weight" required v-model="item.Weight" type="number">
                     </div>
                 </div>
                 <input class="btn btn-primary" type="submit" value="Сохранить">
@@ -116,7 +122,7 @@
 
 <script>
 import Loader from '@/components/Loader'
-import User from '@/components/User'
+import Order from '@/components/Order'
 export default {
     data(){
         return {
@@ -129,7 +135,9 @@ export default {
                 Car:null,
                 Trailer:null,
                 From:null,
+                FromContact:null,
                 To:null,
+                ToCompanyBox:null,
                 Weight:null,
                 ContainerNumber:null,
                 Client:null,
@@ -138,7 +146,8 @@ export default {
                 BorderCrossing:null,
                 StartDate:null,
                 FinishDate:null,
-                Status:null},
+                Status:null
+            },
             search:"",
             DriversList:[],
             CarsList:[],
@@ -199,8 +208,110 @@ export default {
                 ()=>this.openModal()
             )
         },
-        newItem(){
-            this.item = {id:null,name:null,password:null,user_position:null};
+        async newItem(){
+            await fetch('https://localhost:5001/api/users/',{
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                this.DriversList = json                
+                this.loading = false
+            })
+            await fetch('https://localhost:5001/api/cars/',{
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                this.CarsList = json                
+                this.loading = false
+            })
+            await fetch('https://localhost:5001/api/trailers/',{
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                this.TrailersList = json                
+                this.loading = false
+            })
+            await fetch('https://localhost:5001/api/clients/',{
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                this.ClientsList = json                
+                this.loading = false
+            })
+            await fetch('https://localhost:5001/api/declarants/',{
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                this.DeclarantsList = json                
+                this.loading = false
+            })
+            await fetch('https://localhost:5001/api/customs/',{
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                this.CustomssList = json                
+                this.loading = false
+            })
+            await fetch('https://localhost:5001/api/bordercrossings/',{
+               headers: {
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer '+ localStorage.getItem('jwt')
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                this.BorderCrossingsList = json                
+                this.loading = false
+            })
+            this.item = {
+                id:null,
+                Driver:null,
+                Car:null,
+                Trailer:null,
+                From:null,
+                FromContact:null,
+                To:null,
+                ToCompanyBox:null,
+                Weight:null,
+                ContainerNumber:null,
+                Client:null,
+                Declarant:null,
+                Customs:null,
+                BorderCrossing:null,
+                StartDate:null,
+                FinishDate:null,
+                Status:null
+            };
             this.openModal()
         },
         openModal(){
@@ -208,7 +319,25 @@ export default {
         },
         closeModal(){
             this.Form = false;
-            this.item = {id:null,name:null,password:null,user_position:null};
+            this.item = {
+                id:null,
+                Driver:null,
+                Car:null,
+                Trailer:null,
+                From:null,
+                FromContact:null,
+                To:null,
+                ToCompanyBox:null,
+                Weight:null,
+                ContainerNumber:null,
+                Client:null,
+                Declarant:null,
+                Customs:null,
+                BorderCrossing:null,
+                StartDate:null,
+                FinishDate:null,
+                Status:null
+            };
             this.selectedItem = null;
         },
         async onSubmit(){
@@ -259,7 +388,7 @@ export default {
         this.getItems()
     },
     components:{
-        Loader, User
+        Loader, Order
     } 
 }
 </script>
@@ -280,7 +409,7 @@ export default {
     margin-bottom: 1.5rem;
   }
 }
-.modal {
+.modal-big {
   position: absolute;
   top: 20%;
   left: 60%;
