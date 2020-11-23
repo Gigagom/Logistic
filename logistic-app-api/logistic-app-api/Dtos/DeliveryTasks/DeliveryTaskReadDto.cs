@@ -22,5 +22,8 @@ namespace logistic_app_api.Dtos.DeliveryTasks
         public Declarant Declarant { get; set; }
         public Customs Customs { get; set; }
         public BorderCrossing BorderCrossing { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime FinishDate { get; set; }
+        public int Status { get; set; }
     }
 }
