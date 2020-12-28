@@ -26,7 +26,7 @@
                 <div class="form-row">
                   <div class="col form-group">
                     <label for="number">Локация</label>
-                    <input class="form-control" name="number" v-model="item.location" type="text">
+                    <input class="form-control" name="number" v-model="item.location" type="text" readonly>
                   </div>
                 </div>
                 <input class="btn btn-primary" type="submit" value="Сохранить">
@@ -109,7 +109,10 @@ export default {
             this.item = {id:null,name:null,location:null};
         },
         async onSubmit(){
-            if(this.item.id){
+            await this.$parent.getLocation(this.item.name)
+            this.item.location = this.$parent.coordinates;
+            this.$parent.coordinates = null;
+            if(this.item.id){                
                 await fetch('https://localhost:5001/api/bordercrossings/'+this.item.id, 
                 { 
                     method: 'PUT',

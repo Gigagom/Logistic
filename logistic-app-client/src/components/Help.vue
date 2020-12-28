@@ -37,7 +37,7 @@ export default {
 
 <style lang="scss" scope>
 .help {
-  z-index: 2;
+  z-index: 3;
   position: absolute;
   height: 90vh;
   width: 90%;

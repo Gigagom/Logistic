@@ -10,7 +10,9 @@
             <router-view/>
           </div>        
           <div class="col-wide">
-            <Map/>
+            <Map 
+            :center="center"
+            />
             <Help 
             v-if="Help_form"
             />
@@ -35,13 +37,25 @@ export default {
   },
   data(){
     return{
-      Help_form:false
+      Help_form:false,
+      center:{ lat: 53.89803, lng: 27.56483 },
+      coordinates:null
     }    
   },
   methods:{
     HelpVision(){
       this.Help_form = !this.Help_form;
+    },
+    async getLocation(address){
+      await fetch('https://geocode.search.hereapi.com/v1/geocode?q='+address+'&apiKey=32spC4r3MutuuHL1dh7Qh1eTDqYP64Zn5VGNab8Daoo')
+      .then(response => response.json())
+      .then(json => {
+        this.coordinates = json.items[0].position.lat+","+json.items[0].position.lng;
+      })
     }
+  },
+  mounted(){
+    //let map = this.$refs.map;
   }
 }
 </script>
@@ -164,6 +178,10 @@ button, [type="button"], [type="reset"], [type="submit"] {
       line-height: 0.6;
     }
   }
+}
+
+.modal {
+  z-index: 1;
 }
   
 .form-control {
