@@ -15,5 +15,9 @@ namespace logistic_app_api.Models
         [MaxLength(100)]
         public string Model { get; set; }
         public string Number { get; set; }
+        public string VinNumber { get; set; }
+        public DateTime TODate { get; set; }
+        public DateTime BlrInsuranceDate { get; set; }
+        public DateTime GCInsuranceDate { get; set; }
     }
 }

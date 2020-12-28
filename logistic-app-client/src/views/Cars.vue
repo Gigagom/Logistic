@@ -2,7 +2,7 @@
     <div class="list">
         <h1 class="title">Автомобили</h1>
         <input class="field__search form-control form-control-sm" type="text" placeholder="Поиск" v-model="search">        
-        <button class="btn btn-sm btn-secondary new__btn"  v-on:click.prevent="newItem"><i>&#43;</i><span>Добавить</span></button>
+        <button class="btn btn_icon btn-sm btn-secondary new__btn"  v-on:click.prevent="newItem"><i>&#43;</i><span>Добавить</span></button>
         <Loader v-if="loading"/>
         <ul class="items-list" v-else-if="searchItems.length">
             <Car

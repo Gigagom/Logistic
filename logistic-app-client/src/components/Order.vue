@@ -25,9 +25,15 @@ export default {
                 word = "Ожидает выполнения"
                 break;
             case 1:
-                word = 'В пути'
+                word = 'На загрузке'
                 break;
             case 2:
+                word = 'В пути'
+                break;
+            case 3:
+                word = 'На выгрузке'
+                break;
+            case 4:
                 word = 'Завершен'
                 break;
             }

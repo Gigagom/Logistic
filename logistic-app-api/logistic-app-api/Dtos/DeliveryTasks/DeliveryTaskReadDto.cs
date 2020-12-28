@@ -27,5 +27,6 @@ namespace logistic_app_api.Dtos.DeliveryTasks
         public DateTime StartDate { get; set; }
         public DateTime FinishDate { get; set; }
         public int Status { get; set; }
+        public string Type { get; set; }
     }
 }

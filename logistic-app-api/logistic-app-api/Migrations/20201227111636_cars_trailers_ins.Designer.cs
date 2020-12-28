@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using logistic_app_api.Data;
 
 namespace logistic_app_api.Migrations
 {
     [DbContext(typeof(LogisticContext))]
-    partial class LogisticContextModelSnapshot : ModelSnapshot
+    [Migration("20201227111636_cars_trailers_ins")]
+    partial class cars_trailers_ins
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,8 +189,8 @@ namespace logistic_app_api.Migrations
                     b.Property<int?>("TrailerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<double>("Weight")
                         .HasColumnType("float");

@@ -3,13 +3,18 @@
     <div class="row">
       <div class="col menu-wrap">
         <MenuList/>
-      </div>      
+      </div>   
       <div class="col-wide">
         <div class="row">
           <div class="col-2 sub-menu">
             <router-view/>
           </div>        
-          <Map/>
+          <div class="col-wide">
+            <Map/>
+            <Help 
+            v-if="Help_form"
+            />
+          </div>
         </div> 
       </div> 
     </div>       
@@ -20,11 +25,23 @@
 
 import MenuList from '@/components/MenuList'
 import Map from '@/components/Map'
+import Help from '@/components/Help'
 export default {
   name: 'App', 
   components: {
     MenuList,
-    Map
+    Map,
+    Help
+  },
+  data(){
+    return{
+      Help_form:false
+    }    
+  },
+  methods:{
+    HelpVision(){
+      this.Help_form = !this.Help_form;
+    }
   }
 }
 </script>
@@ -82,12 +99,25 @@ button, [type="button"], [type="reset"], [type="submit"] {
   &:focus {
     outline: none;
   }
-  
-  &-sm {
-    padding: 0.12rem 0.8rem;
-    font-size: 0.82rem;
-    line-height: 1.2;
-    border-radius: 0.5rem;
+
+  &_icon {
+    display: inline-flex;
+    align-items: center;
+
+    span {
+      margin-left: 8px;
+    }
+  }
+
+  i {
+    margin-left: -2px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    vertical-align:middle
+  }
+
+  span {
+    vertical-align:middle
   }
   
   &-secondary {
@@ -123,16 +153,16 @@ button, [type="button"], [type="reset"], [type="submit"] {
       box-shadow: 0 0 0 0.2rem rgba($primary-light, 0.25);
     }
   }
-  
-  i {
-    margin-left: -2px;
-    margin-right: 8px;
-    font-weight: 700;
-    font-size: 1.2rem;
-    vertical-align:middle
-  }
-  span {
-    vertical-align:middle
+
+  &-sm {
+    padding: 0.12rem 0.8rem;
+    font-size: 0.82rem;
+    line-height: 1.2;
+    border-radius: 0.5rem;
+    
+    i {
+      line-height: 0.6;
+    }
   }
 }
   

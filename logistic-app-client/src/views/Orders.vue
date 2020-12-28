@@ -2,7 +2,26 @@
     <div class="list">
         <h1 class="title">Заказы</h1>
         <!-- <input class="field__search form-control form-control-sm" type="text" placeholder="Поиск" v-model="search">         -->
-        <button class="btn btn-sm btn-secondary new__btn"  v-on:click.prevent="newItem"><i>&#43;</i><span>Добавить</span></button>
+        <div class="form-group">
+            <label>Статус</label>
+            <select class="form-control" v-model="StatusFilter">
+                <option value="all">Все</option>
+                <option value="0">Ожидает выполнения</option>
+                <option value="1">На загрузке</option>
+                <option value="2">В пути</option>
+                <option value="3">На выгрузке</option>
+                <option value="4">Завершено</option>
+            </select>            
+        </div>
+        <div class="form-group">
+            <label>Тип</label>
+            <select class="form-control" v-model="TypeFilter">
+                <option value="all">Все</option>
+                <option value="import">Импорт</option>
+                <option value="export">Экспорт</option>
+            </select>
+        </div>
+        <button class="btn btn_icon btn-sm btn-secondary new__btn"  v-on:click.prevent="newItem"><i>&#43;</i><span>Добавить</span></button>
         <Loader v-if="loading"/>
         <ul class="items-list" v-else-if="searchItems.length">
             <Order
@@ -27,6 +46,14 @@
                     </div>
                 </div>
                 <div class="form-row">
+                    <div class="col form-group">
+                        <label>Тип</label>
+                        <select class="form-control" v-model="item.type">
+                            <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
+                            <option value="import">Импорт</option>
+                            <option value="export">Экспорт</option>
+                        </select>
+                    </div>
                     <div class="col form-group">
                         <label>Водитель</label>
                         <select class="form-control" v-model="item.driver.id">
@@ -146,25 +173,30 @@ export default {
                 borderCrossing:{id:null},
                 startDate:null,
                 finishDate:null,
-                status:null
+                status:null,
+                type:null
             },
-            search:"",
             DriversList:[],
             CarsList:[],
             TrailersList:[],
             ClientsList:[],
             DeclarantsList:[],
             CustomssList:[],
-            BorderCrossingsList:[]
+            BorderCrossingsList:[],
+            StatusFilter:"all",
+            TypeFilter:"all"
         }
     },
     computed:{
         searchItems(){
-            if(this.search.length){
-                return this.ItemsList.filter(c => c.name.toLowerCase().startsWith(this.search.toLowerCase()))
-            }else{
-                return this.ItemsList
+            let filtered_data = this.ItemsList;
+            if(this.TypeFilter != 'all' ){
+                filtered_data = this.ItemsList.filter(c => c.type.toLowerCase().startsWith(this.TypeFilter))
             }
+            if(this.StatusFilter != 'all' ){
+                filtered_data = this.ItemsList.filter(c => c.status == this.StatusFilter)
+            }
+            return filtered_data;
         }
     },
     methods:{
@@ -396,7 +428,8 @@ export default {
                 borderCrossing:{id:null},
                 startDate:null,
                 finishDate:null,
-                status:0
+                status:0,
+                type:null
             };
             this.openModal()
         },
@@ -496,6 +529,7 @@ export default {
   }
 }
 .modal-big {
+  z-index: 1;
   position: absolute;
   top: 20%;
   left: 60%;

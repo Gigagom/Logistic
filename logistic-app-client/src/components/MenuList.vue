@@ -1,13 +1,16 @@
 <template>
-    <div>
+    <div class="menu">
         <ul class="menu-list">
             <MenuItem
                 v-for="item of menuItems" :key="item.id"
                 v-bind:item="item" 
             />
-            <button class="btn btn-sm btn-secondary new__btn"  v-on:click.prevent="Logout">Выйти</button>
+            
         </ul>
-       
+        <div class="menu-bottom-control">
+            <button class="btn btn-sm btn-secondary new__btn"  v-on:click.prevent="Logout">Выйти</button>
+            <button class="btn btn_icon btn-sm btn-secondary new__btn" v-on:click.prevent="openHelp"><i>?</i></button>
+        </div>
     </div>
 </template>
 
@@ -36,6 +39,9 @@ export default {
         Logout(){
             localStorage.setItem('jwt',null)
             this.$router.push('/login')
+        },
+        openHelp(){
+            this.$parent.HelpVision();
         }
     }    
 }
@@ -45,7 +51,23 @@ export default {
 ul {
   list-style:none;
 }
-.menu-list {
-  margin-top: 80px;
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  &-bottom-control {
+    padding: 0 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  &-list {
+    margin-top: 80px;
+  }
 }
 </style>

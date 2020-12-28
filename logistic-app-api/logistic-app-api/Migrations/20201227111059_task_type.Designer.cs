@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using logistic_app_api.Data;
 
 namespace logistic_app_api.Migrations
 {
     [DbContext(typeof(LogisticContext))]
-    partial class LogisticContextModelSnapshot : ModelSnapshot
+    [Migration("20201227111059_task_type")]
+    partial class task_type
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,18 +46,12 @@ namespace logistic_app_api.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("BlrInsuranceDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<double>("Fuel_consumption")
                         .HasColumnType("float");
-
-                    b.Property<DateTime>("GCInsuranceDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<double>("Mileage")
                         .HasColumnType("float");
@@ -65,12 +61,6 @@ namespace logistic_app_api.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("Number")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("TODate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("VinNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -187,8 +177,8 @@ namespace logistic_app_api.Migrations
                     b.Property<int?>("TrailerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<double>("Weight")
                         .HasColumnType("float");
@@ -237,27 +227,15 @@ namespace logistic_app_api.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("BlrInsuranceDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
-
-                    b.Property<DateTime>("GCInsuranceDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("Number")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("TODate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("VinNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
