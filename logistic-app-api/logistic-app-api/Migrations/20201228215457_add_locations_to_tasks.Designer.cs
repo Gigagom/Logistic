@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using logistic_app_api.Data;
 
 namespace logistic_app_api.Migrations
 {
     [DbContext(typeof(LogisticContext))]
-    partial class LogisticContextModelSnapshot : ModelSnapshot
+    [Migration("20201228215457_add_locations_to_tasks")]
+    partial class add_locations_to_tasks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

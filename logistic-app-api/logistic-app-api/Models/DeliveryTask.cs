@@ -14,8 +14,10 @@ namespace logistic_app_api.Models
         public Car Car { get; set; }
         public Trailer Trailer { get; set; }
         public string From { get; set; }
+        public string FromLocation { get; set; }
         public string FromContact { get; set; }
         public string To { get; set; }
+        public string ToLocation { get; set; }
         public string ToCompanyBox { get; set; }
         public double Weight { get; set; }
         public string ContainerNumber { get; set; }
