@@ -45,6 +45,7 @@
 <script>
 import Loader from '@/components/Loader'
 import Custom from '@/components/Custom'
+import {Encoder} from '@/components/Encoder.js'
 export default {
     data(){
         return {
@@ -115,9 +116,7 @@ export default {
             this.item = {id:null,name:null, address:null,location:null};
         },
         async onSubmit(){
-            await this.$parent.getLocation(this.item.address)
-            this.item.location = this.$parent.coordinates;
-            this.$parent.coordinates = null;
+            await Encoder.EncodeAddress(this.item.address).then(c => this.item.location = c)
             if(this.item.id){               
                 await fetch('https://localhost:5001/api/customs/'+this.item.id, 
                 { 

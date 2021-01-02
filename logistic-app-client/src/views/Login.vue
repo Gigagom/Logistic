@@ -44,7 +44,7 @@
                 if(json.access_token){
                     localStorage.setItem('jwt',json.access_token)
                     if (localStorage.getItem('jwt') !== 'null' || localStorage.getItem('jwt') !== ''){
-                        this.$router.push('/')
+                        this.$router.push('/orders')
                     }
                 }
                 else{

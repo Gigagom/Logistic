@@ -39,6 +39,7 @@
 <script>
 import Loader from '@/components/Loader'
 import BorderCrossing from '@/components/BorderCrossing'
+import {Encoder} from '@/components/Encoder.js'
 export default {
     data(){
         return {
@@ -109,9 +110,7 @@ export default {
             this.item = {id:null,name:null,location:null};
         },
         async onSubmit(){
-            await this.$parent.getLocation(this.item.name)
-            this.item.location = this.$parent.coordinates;
-            this.$parent.coordinates = null;
+            await Encoder.EncodeAddress(this.item.name).then(c => this.item.location = c)
             if(this.item.id){                
                 await fetch('https://localhost:5001/api/bordercrossings/'+this.item.id, 
                 { 

@@ -1,7 +1,7 @@
 <template>
     <div class="help">
         <div class="help__heading">Справка</div>
-        <button class="help__close" v-on:click.prevent="closeHelp"><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg></button>
+        <button class="help__close" v-on:click="$emit('helpVision')"><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg></button>
         <tabs>
             <tab title="Вход">
             Вход
@@ -25,11 +25,6 @@ import { Tabs, Tab } from 'vue-slim-tabs'
 export default {
   components: {
     Tabs, Tab
-  },
-  methods:{
-    closeHelp(){
-        this.$parent.HelpVision();
-    }
   }
 }
 
