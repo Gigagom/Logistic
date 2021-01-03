@@ -4,6 +4,7 @@
             <strong>Заказ №{{item.id}}</strong>
             <br> <span class="item-item__info__number">{{status}}</span>
         </span>
+        <button class="btn show-route-btn" title="Отобразить заказ на карте" v-on:click="$emit('show-order', item.id)"></button>
         <button class="btn item-item__close" v-on:click="$emit('remove-item', item.id)">&times;</button>
     </li>
 </template>
@@ -44,6 +45,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.show-route-btn{
+    background-image: url(../assets/marker_icon.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
 .list-item {
   border: 1px solid $gray;
   border-radius: 0rem;

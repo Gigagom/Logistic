@@ -12,7 +12,8 @@
             <router-view/>
           </div>        
           <div class="col-wide">
-            <Map 
+            <Map
+            ref="map"
             :center="center"
             />
             <Help 
@@ -48,9 +49,6 @@ export default {
     HelpVision(){
       this.Help_form = !this.Help_form;
     }
-  },
-  mounted(){
-    //let map = this.$refs.map;
   }
 }
 </script>

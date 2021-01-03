@@ -10,7 +10,6 @@
         <div class="menu-bottom-control">
             <button class="btn btn-sm btn-secondary new__btn"  v-on:click.prevent="Logout">Выйти</button>
             <button class="btn btn_icon btn-sm btn-secondary new__btn" v-on:click="$emit('helpVision')"><i>?</i></button>
-            <button class="btn btn_icon btn-sm btn-secondary new__btn" v-on:click=test(1)><i>!</i></button>
         </div>
     </div>
 </template>
@@ -39,10 +38,6 @@ export default {
         Logout(){
             localStorage.setItem('jwt',null)
             this.$router.push('/login')
-        },
-        
-        async test(){
-            
         }
     }    
 }

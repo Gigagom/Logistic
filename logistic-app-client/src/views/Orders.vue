@@ -29,6 +29,7 @@
                 v-bind:item="item"
                 @remove-item="removeItem"
                 @get-item="getItem"
+                @show-order="showOrderOnMap"
             />
         </ul>
         <p v-else>Список пуст</p>
@@ -144,26 +145,34 @@
                 <button class="modal-big__form__close" v-on:click.prevent="closeModal"><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg></button>
             </form>
         </div>
+        <div v-if="routeForm" class="modal-route">
+            Информация о заказе
+            <button class="modal-big__form__close" v-on:click.prevent="closeOrderModal"><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg></button>
+        </div>
     </div>
 </template>
 
 <script>
 import Loader from '@/components/Loader'
 import Order from '@/components/Order'
+import {Encoder} from '@/components/Encoder.js'
 export default {
     data(){
         return {
             ItemsList:[],
             loading: true,
             Form:false,
+            routeForm:false,
             item:{
                 id:null,
                 driver:{id:null},
                 car:{id:null},
                 trailer:{id:null},
                 from:null,
+                FromLocation:null,
                 fromContact:null,
                 to:null,
+                ToLocation:null,
                 toCompanyBox:null,
                 weight:null,
                 containerNumber:null,
@@ -226,6 +235,9 @@ export default {
             })
         },
         async getItem(id){
+            await this.getItemData(id).then(()=>this.openModal())
+        },
+        async getItemData(id){
             await fetch('https://localhost:5001/api/users/',{
                headers: {
                     'Content-Type': 'application/json',
@@ -322,11 +334,11 @@ export default {
                 this.item = json;
                 this.item.startDate = this.item.startDate.split('T')[0];
                 this.item.finishDate = this.item.finishDate.split('T')[0];
-            }).finally(
-                ()=>this.openModal()
-            )
+            })
         },
         async newItem(){
+            if(this.routeForm)
+                this.closeOrderModal();
             await fetch('https://localhost:5001/api/users/',{
                headers: {
                     'Content-Type': 'application/json',
@@ -417,8 +429,10 @@ export default {
                 car:{id:null},
                 trailer:{id:null},
                 from:null,
+                FromLocation:null,
                 fromContact:null,
                 to:null,
+                ToLocation:null,
                 toCompanyBox:null,
                 weight:null,
                 containerNumber:null,
@@ -428,12 +442,12 @@ export default {
                 borderCrossing:{id:null},
                 startDate:null,
                 finishDate:null,
-                status:0,
+                status:null,
                 type:null
             };
             this.openModal()
         },
-        openModal(){
+        openModal(){            
             this.Form = true;
         },
         closeModal(){
@@ -444,8 +458,10 @@ export default {
                 car:{id:null},
                 trailer:{id:null},
                 from:null,
+                FromLocation:null,
                 fromContact:null,
                 to:null,
+                ToLocation:null,
                 toCompanyBox:null,
                 weight:null,
                 containerNumber:null,
@@ -455,11 +471,14 @@ export default {
                 borderCrossing:{id:null},
                 startDate:null,
                 finishDate:null,
-                status:null
+                status:null,
+                type:null
             };
             this.selectedItem = null;
         },
         async onSubmit(){
+            await Encoder.EncodeAddress(this.item.from).then(c => this.item.FromLocation = c)
+            await Encoder.EncodeAddress(this.item.to).then(c => this.item.ToLocation = c)
             if(this.item.id){
                 await fetch('https://localhost:5001/api/deliverytasks/'+this.item.id, 
                 { 
@@ -501,6 +520,40 @@ export default {
                 })
             }
             
+        },
+        async showOrderOnMap(id){
+            if(this.Form)
+                this.closeModal()
+            await this.getItemData(id).then(()=>{
+                this.$root.$refs.MapComponent.dropOrder(this.item);
+            }) 
+            this.routeForm = true;           
+        },
+        closeOrderModal(){      
+            this.$root.$refs.MapComponent.removeOrder();     
+            this.routeForm = false;
+            this.item = {
+                id:null,
+                driver:{id:null},
+                car:{id:null},
+                trailer:{id:null},
+                from:null,
+                FromLocation:null,
+                fromContact:null,
+                to:null,
+                ToLocation:null,
+                toCompanyBox:null,
+                weight:null,
+                containerNumber:null,
+                client:{id:null},
+                declarant:{id:null},
+                customs:{id:null},
+                borderCrossing:{id:null},
+                startDate:null,
+                finishDate:null,
+                status:null,
+                type:null
+            };
         }
     },
     async mounted(){
@@ -529,13 +582,54 @@ export default {
   }
 }
 .modal-big {
-  z-index: 2;
+  z-index: 3;
   position: absolute;
   top: 20%;
   left: 60%;
   transform: translateY(-20%) translatex(-50%);
   width: 900px;
   height: auto;
+  border: 1px solid #EBEBFF;
+  border-radius: 0.3rem;
+  background-color: $white;
+  padding: 1.5rem;
+  
+  &__form {
+    &__close {
+      position: absolute;
+      opacity: .8;
+      padding: 10px;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      display: inline-block;
+      height: 44px;
+      vertical-align: top;
+      visibility: inherit;
+      width: 44px;
+      
+      &:hover {
+        opacity: 1;
+      }
+      
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+.modal-route {
+  z-index: 3;
+  position: absolute;
+  bottom: 5%;
+  left: 60%;
+  transform: translateY(-20%) translatex(-50%);
+  width: 600px;
+  height: 200px;
   border: 1px solid #EBEBFF;
   border-radius: 0.3rem;
   background-color: $white;
