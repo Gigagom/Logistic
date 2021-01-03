@@ -2,7 +2,7 @@
     <li class="list-item">
         <span class="item-item__info" v-on:click="$emit('get-item', item.id)">
             <strong>{{index+1}}</strong>
-            {{item.name}} {{item.user_position.name}}
+            {{item.fio}} <br> <div class="position-text">{{item.user_position.name}}</div>
         </span>
         <button class="btn item-item__close" v-on:click="$emit('remove-item', item.id)">&times;</button>
     </li>
@@ -21,6 +21,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.position-text{
+  color:gray;
+}
 .list-item {
   border: 1px solid $gray;
   border-radius: 0rem;

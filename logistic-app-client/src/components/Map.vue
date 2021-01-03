@@ -69,44 +69,43 @@ export default {
       );
       this.map.addObject(fromMarker);
       this.map.addObject(toMarker);
-      //this.drawRoute(order.fromLocation, order.toLocation);
+      this.drawRoute(order.fromLocation, order.toLocation);
     },
     removeOrder: function(){
       this.map.removeObjects(this.map.getObjects())
     },
-    // drawRoute(start, finish){
-    //   const H = window.H;
-    //   this.routingService.calculateRoute(
-    //     {
-    //       "mode":"fastest;car;traffic:enabled",
-    //       "waypoint0":`${start.split(',')[0]},${start.split(',')[1]}`,
-    //       "waypoint1":`${finish.split(',')[0]},${finish.split(',')[1]}`,
-    //       "representation":"display"
-    //     },
-    //     data => {
-    //       console.log(data.responce.route)
-    //       if(data.responce.route.length > 0){
-    //         let lineString = new H.geo.LineString();
-    //         data.responce.route[0].shape.forEach(point => {
-    //           let [lat, lng] = point.split(",");
-    //           lineString.pushPoint({lat:lat,lng:lng});
-    //         });
-    //         let polyline = new H.map.PoluLine(
-    //           lineString,
-    //           {
-    //             style:{
-    //               lineWidth: 5
-    //             }
-    //           }
-    //         );
-    //         this.map.addObject(polyline);
-    //       }
-    //     },
-    //     error => {
-    //       console.error(error)
-    //     }
-    //   );
-    //}
+    async drawRoute(start, finish){
+      const H = window.H;
+      await this.routingService.calculateRoute(
+        {
+          "mode":"fastest;car;traffic:enabled",
+          "waypoint0":`${start.split(',')[0]},${start.split(',')[1]}`,
+          "waypoint1":`${finish.split(',')[0]},${finish.split(',')[1]}`,
+          "representation":"display"
+        },
+        data => {
+          if(data.response.route.length > 0){
+            let lineString = new H.geo.LineString();
+            data.response.route[0].shape.forEach(point => {
+              let [lat, lng] = point.split(",");
+              lineString.pushPoint({lat:lat,lng:lng});
+            });
+            let polyline = new H.map.Polyline(
+              lineString,
+              {
+                style:{
+                  lineWidth: 5
+                }
+              }
+            );
+            this.map.addObject(polyline);
+          }
+        },
+        error => {
+          console.error(error)
+        }
+      );
+    }
   }
 }
 </script>

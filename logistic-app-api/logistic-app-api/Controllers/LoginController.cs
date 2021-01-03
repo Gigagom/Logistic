@@ -25,7 +25,7 @@ namespace logistic_app_api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Token(UserCreateDto _user)
+        public IActionResult Token(UserReadDto _user)
         {
             var identity = GetIdentity(_user.Name, _user.Password);
             if (identity == null)

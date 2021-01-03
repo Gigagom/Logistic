@@ -9,8 +9,9 @@ namespace logistic_app_api.Dtos.Users
 {
     public class UserCreateDto
     {
+        public string FIO { get; set; }
         [Required]
-        [MaxLength(100)]
+        [MaxLength(100)]        
         public string Name { get; set; }
         [Required]
         public string Password { get; set; }

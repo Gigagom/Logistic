@@ -11,6 +11,7 @@ namespace logistic_app_api.Dtos.Users
     {
         [Required]
         [MaxLength(100)]
+        public string FIO { get; set; }
         public string Name { get; set; }
         [Required]
         public string Password { get; set; }

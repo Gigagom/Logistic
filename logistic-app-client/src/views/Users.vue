@@ -18,6 +18,12 @@
             <form id="From" class="modal__form" @submit.prevent="onSubmit">           
                 <input v-if="item.id" v-model="item.id" type="hidden">
                 <div class="form-row">
+                    <div class="col form-group">
+                        <label for="brand">Имя</label>
+                        <input class="form-control" name="brand" required v-model="item.fio" type="text">
+                    </div>
+                </div>
+                <div class="form-row">                  
                   <div class="col form-group">
                     <label for="brand">Логин</label>
                     <input class="form-control" name="brand" required v-model="item.name" type="text">
@@ -56,7 +62,7 @@ export default {
             ItemsList:[],
             loading: true,
             Form:false,
-            item:{id:null,name:null,password:null,user_position:null},
+            item:{id:null,fio:null,name:null,password:null,user_position:null},
             search:"",
             userPositionsList:[
                 {
@@ -75,7 +81,7 @@ export default {
     computed:{
         searchItems(){
             if(this.search.length){
-                return this.ItemsList.filter(c => c.name.toLowerCase().startsWith(this.search.toLowerCase()))
+                return this.ItemsList.filter(c => c.fio.toLowerCase().startsWith(this.search.toLowerCase()))
             }else{
                 return this.ItemsList
             }
@@ -123,7 +129,7 @@ export default {
             )
         },
         newItem(){
-            this.item = {id:null,name:null,password:null,user_position:null};
+            this.item = {id:null,fio:null,name:null,password:null,user_position:null};
             this.openModal()
         },
         openModal(){
@@ -131,7 +137,7 @@ export default {
         },
         closeModal(){
             this.Form = false;
-            this.item = {id:null,name:null,password:null,user_position:null};
+            this.item = {id:null,fio:null,name:null,password:null,user_position:null};
             this.selectedItem = null;
         },
         async onSubmit(){

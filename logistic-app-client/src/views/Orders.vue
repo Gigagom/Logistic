@@ -146,7 +146,21 @@
             </form>
         </div>
         <div v-if="routeForm" class="modal-route">
-            Информация о заказе
+            <b>Информация о заказе №{{item.id}}</b>
+            <div class="modal__form">
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label>Дата выезда: {{item.startDate}}</label>
+                        <label>Дата доставки: {{item.startDate}}</label>
+                        <label>Адрес загрузки: {{item.from}}</label>                        
+                        <label>Адрес доставки: {{item.to}}</label>
+                    </div>
+                    <div class="col form-group">
+                        <label>Водитель: {{item.driver.fio}}</label><br>
+                        <label>Автомобиль: {{item.car.brand}} {{item.car.model}} {{item.car.number}}</label>
+                    </div>
+                </div>
+            </div>
             <button class="modal-big__form__close" v-on:click.prevent="closeOrderModal"><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg></button>
         </div>
     </div>
@@ -235,6 +249,7 @@ export default {
             })
         },
         async getItem(id){
+            this.closeOrderModal()
             await this.getItemData(id).then(()=>this.openModal())
         },
         async getItemData(id){
@@ -628,7 +643,7 @@ export default {
   bottom: 5%;
   left: 60%;
   transform: translateY(-20%) translatex(-50%);
-  width: 600px;
+  width: 800px;
   height: 200px;
   border: 1px solid #EBEBFF;
   border-radius: 0.3rem;
