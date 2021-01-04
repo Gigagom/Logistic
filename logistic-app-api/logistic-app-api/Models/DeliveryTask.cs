@@ -29,5 +29,6 @@ namespace logistic_app_api.Models
         public DateTime FinishDate { get; set; }
         public int Status { get; set; }
         public string Type { get; set; }
+        public string CurrentLocation { get; set; }
     }
 }

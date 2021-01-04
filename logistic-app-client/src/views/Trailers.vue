@@ -32,6 +32,20 @@
                     <label for="number">Номер</label>
                     <input class="form-control" name="number" v-model="item.number" type="text">
                   </div>
+                  <div class="col form-group">
+                    <label for="TODate">Дата последнего ТО</label>
+                    <input class="form-control" name="TODate" required v-model="item.toDate" type="date">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="col form-group">
+                    <label for="BlrInsuranceDate">Дата бел. страховки</label>
+                    <input class="form-control" name="BlrInsuranceDate" required v-model="item.blrInsuranceDate" type="date">
+                  </div>
+                  <div class="col form-group">
+                    <label for="GCInsuranceDate">Дата зеленой карты</label>
+                    <input class="form-control" name="GCInsuranceDate" required v-model="item.gcInsuranceDate" type="date">
+                  </div>
                 </div>
                 <input class="btn btn-primary" type="submit" value="Сохранить">
                 <button class="modal__form__close" v-on:click.prevent="closeModal"><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg></button>
@@ -49,7 +63,7 @@ export default {
             ItemsList:[],
             loading: true,
             Form:false,
-            item:{id:null,brand:null,model:null,number:null},
+            item:{id:null,brand:null,model:null,number:null,toDate:null,blrInsuranceDate:null,gcInsuranceDate:null},
             search:""
         }
     },
@@ -99,10 +113,13 @@ export default {
             .then(response => response.json())
             .then(json => {
                 this.item = json;
+                this.item.toDate = this.item.toDate.split('T')[0];
+                this.item.blrInsuranceDate = this.item.blrInsuranceDate.split('T')[0];
+                this.item.gcInsuranceDate = this.item.gcInsuranceDate.split('T')[0];
             }).finally(()=>this.openModal())
         },
         newItem(){
-            this.item = {id:null,brand:null,model:null,number:null};
+            this.item = {id:null,brand:null,model:null,number:null,toDate:null,blrInsuranceDate:null,gcInsuranceDate:null};
             this.openModal()
         },
         openModal(){
@@ -110,7 +127,7 @@ export default {
         },
         closeModal(){
             this.Form = false;
-            this.item = {id:null,brand:null,model:null,number:null};
+            this.item = {id:null,brand:null,model:null,number:null,toDate:null,blrInsuranceDate:null,gcInsuranceDate:null};
         },
         async onSubmit(){
             if(this.item.id){

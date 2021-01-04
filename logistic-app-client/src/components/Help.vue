@@ -4,12 +4,28 @@
         <button class="help__close" v-on:click="$emit('helpVision')"><svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 24 24"><path d="M13 12l5-5-1-1-5 5-5-5-1 1 5 5-5 5 1 1 5-5 5 5 1-1z"></path></svg></button>
         <tabs>
             <tab title="Вход">
-            Вход
+            Для того чтобы получить доступ к приложению введите свои авторизационные данные в поля для авторизации и нажмите кнопку "Войти"<br>
+            Если введенные данные корректны то вы попадете на страницу заказов, при неверные отобразится сообщение, что данные неверны.
             </tab>
             <tab title="Заказы">
             This is React
             </tab>
             <tab title="Автомобили и прицепы">
+            This is Svelte
+            </tab>
+            <tab title="Клиенты">
+            This is Svelte
+            </tab>
+            <tab title="Пункты пропуска">
+            This is Svelte
+            </tab>
+            <tab title="Таможни">
+            This is Svelte
+            </tab>
+            <tab title="Декларанты">
+            This is Svelte
+            </tab>
+            <tab title="Пользователи">
             This is Svelte
             </tab>
             <tab title="О программе">
@@ -31,6 +47,9 @@ export default {
 </script>
 
 <style lang="scss" scope>
+.vue-tab{
+  font-size: 12px;
+}
 .help {
   z-index: 4;
   position: absolute;

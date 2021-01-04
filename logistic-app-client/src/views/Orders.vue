@@ -197,7 +197,8 @@ export default {
                 startDate:null,
                 finishDate:null,
                 status:null,
-                type:null
+                type:null,
+                CurrentLocation:null
             },
             DriversList:[],
             CarsList:[],
@@ -458,7 +459,8 @@ export default {
                 startDate:null,
                 finishDate:null,
                 status:null,
-                type:null
+                type:null,
+                CurrentLocation:null
             };
             this.openModal()
         },
@@ -487,7 +489,8 @@ export default {
                 startDate:null,
                 finishDate:null,
                 status:null,
-                type:null
+                type:null,
+                CurrentLocation:null
             };
             this.selectedItem = null;
         },

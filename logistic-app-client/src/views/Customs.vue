@@ -29,7 +29,7 @@
                     <input class="form-control" name="number" v-model="item.address" type="text">
                   </div>
                 </div>
-                <div class="form-row">
+                <div v-if="item.location" class="form-row">
                   <div class="col form-group">
                     <label for="number">Локация</label>
                     <input class="form-control" name="number" v-model="item.location" type="text" readonly>
