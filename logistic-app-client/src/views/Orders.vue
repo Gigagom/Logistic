@@ -59,7 +59,7 @@
                         <label>Водитель</label>
                         <select class="form-control" v-model="item.driver.id">
                             <option disabled :value="null" selected hidden>Выберите один из вариантов</option>
-                            <option v-for="Driver of DriversList" :key="Driver.id" :value=Driver.id>{{Driver.name}}</option>
+                            <option v-for="Driver of DriversList" :key="Driver.id" :value=Driver.id>{{Driver.fio}}</option>
                         </select>
                     </div>
                 </div>
@@ -517,6 +517,7 @@ export default {
                     this.closeModal()
                 })
             }else{
+                this.item.status = 0
                 await fetch('https://localhost:5001/api/deliverytasks/', 
                 { 
                     method: 'POST',
